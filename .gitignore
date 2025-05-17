@@ -1,0 +1,5 @@
+ca/private
+ca/newcerts
+ca/index*
+ca/serial*
+.DS_Store

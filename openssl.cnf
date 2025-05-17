@@ -1,0 +1,117 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir             = ./ca
+certs           = $dir/certs
+crl_dir         = $dir/crl
+new_certs_dir   = $dir/newcerts
+database        = $dir/index.txt
+serial          = $dir/serial
+RANDFILE        = $dir/private/.rand
+
+private_key     = $dir/private/caPrivate.key
+certificate     = $dir/certs/ca.pem
+
+default_days    = 1277
+default_md      = sha256
+preserve        = no
+policy          = policy_loose
+
+# For certificate revocation listss
+
+[ policy_strict ]
+# The root CA should only sign intermediate certificates that match.
+# See the POLICY FORMAT section of `man ca`.
+countryName             = match
+stateOrProvinceName     = match
+organizationName        = match
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ policy_loose ]
+# Allow the intermediate CA to sign a more diverse range of certificates.
+# See the POLICY FORMAT section of the `ca` man page.
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+# Options for the `req` tool (`man req`).
+default_bits        = 2048
+distinguished_name  = req_distinguished_name
+string_mask         = utf8only
+
+# SHA-1 is deprecated, so use SHA-2 instead.
+default_md          = sha256
+
+# Extension to add when the -x509 option is used.
+x509_extensions     = v3_ca
+
+[ req_distinguished_name ]
+countryName                     = Country Name (2 letter code)
+stateOrProvinceName             = State or Province Name
+localityName                    = Locality Name
+0.organizationName              = Organization Name
+organizationalUnitName          = Organizational Unit Name
+commonName                      = Common Name
+emailAddress                    = Email Address
+countryName_default             = US
+stateOrProvinceName_default     = California
+localityName_default            = San Jose
+0.organizationName_default      = CS2PA
+organizationalUnitName_default  = IT Intrastructure
+
+[ v3_ca ]
+# Extensions for a typical CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ v3_intermediate_ca ]
+# Extensions for a typical intermediate CA (`man x509v3_config`).
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+# This gets set in temp_ext.cnf
+# [ alt_names ]
+# otherName.1 = 1.3.6.1.4.1.311.20.2.3;UTF8:username@ad.cs2pa.net
+
+[ additional_oids ]
+ekuDriveEncryption = 1.3.6.1.4.1.311.67.1.1
+
+[ piv_9a ]
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical,digitalSignature,keyEncipherment,nonRepudiation
+extendedKeyUsage       = clientAuth,1.3.6.1.4.1.311.20.2.2
+subjectAltName         = @alt_names
+crlDistributionPoints  = URI:http://pki.ad.cs2pa.net/CRL/rootca.crl
+
+[ piv_9c ]
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical,digitalSignature,nonRepudiation
+extendedKeyUsage       = codeSigning,emailProtection,serverAuth,clientAuth
+subjectAltName         = @alt_names
+crlDistributionPoints  = URI:http://pki.ad.cs2pa.net/CRL/rootca.crl
+
+[ piv_9d ]
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical,keyEncipherment,dataEncipherment
+extendedKeyUsage       = emailProtection,serverAuth,clientAuth,1.3.6.1.4.1.311.67.1.1
+subjectAltName         = @alt_names
+crlDistributionPoints  = URI:http://pki.ad.cs2pa.net/CRL/rootca.crl
+
+[ piv_9e ]
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical,digitalSignature,nonRepudiation
+extendedKeyUsage       = serverAuth,clientAuth
+subjectAltName         = @alt_names
+crlDistributionPoints  = URI:http://pki.ad.cs2pa.net/CRL/rootca.crl
