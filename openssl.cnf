@@ -18,6 +18,7 @@ default_md       = sha256
 preserve         = no
 policy           = policy_loose
 default_crl_days = 30
+copy_extensions  = copy
 
 # For certificate revocation listss
 
