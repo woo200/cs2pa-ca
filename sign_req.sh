@@ -7,7 +7,7 @@ function print_usage() {
 
 if [[ $1 == "-h" ]]
 then
-    echo "openssl req -addext \"subjectAltName = subjectAltName=DNS.1:domain.com,DNS.2:domain.com,IP:127.0.0.1\" \\"
+    echo "openssl req -addext \"subjectAltName=DNS.1:domain.com,DNS.2:domain.com,IP:127.0.0.1\" \\"
     echo "            -newkey rsa:2048 -keyout PRIVATEKEY.key -nodes -out MYCSR.csr"
     exit
 fi
@@ -21,4 +21,5 @@ fi
 openssl req -in $1 -text -noout
 openssl ca -config openssl.cnf \
     -out $2 \
-    -in $1 
+    -in $1 \
+    -extensions CRLonly

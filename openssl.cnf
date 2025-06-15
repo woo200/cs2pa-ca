@@ -117,3 +117,6 @@ keyUsage               = critical,digitalSignature,nonRepudiation
 extendedKeyUsage       = serverAuth,clientAuth
 subjectAltName         = @alt_names
 crlDistributionPoints  = URI:http://pki.ad.cs2pa.net/CRL/rootca.crl
+
+[ CRLonly ]
+crlDistributionPoints  = URI:http://pki.ad.cs2pa.net/CRL/rootca.crl
