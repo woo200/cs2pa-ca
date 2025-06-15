@@ -2,4 +2,5 @@ ca/private
 ca/newcerts
 ca/index*
 ca/serial*
+ca/crl
 .DS_Store

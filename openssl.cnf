@@ -2,21 +2,22 @@
 default_ca = CA_default
 
 [ CA_default ]
-dir             = ./ca
-certs           = $dir/certs
-crl_dir         = $dir/crl
-new_certs_dir   = $dir/newcerts
-database        = $dir/index.txt
-serial          = $dir/serial
-RANDFILE        = $dir/private/.rand
+dir              = ./ca
+certs            = $dir/certs
+crl_dir          = $dir/crl
+new_certs_dir    = $dir/newcerts
+database         = $dir/index.txt
+serial           = $dir/serial
+RANDFILE         = $dir/private/.rand
 
-private_key     = $dir/private/caPrivate.key
-certificate     = $dir/certs/ca.pem
+private_key      = $dir/private/caPrivate.key
+certificate      = $dir/certs/ca.pem
 
-default_days    = 1277
-default_md      = sha256
-preserve        = no
-policy          = policy_loose
+default_days     = 1277
+default_md       = sha256
+preserve         = no
+policy           = policy_loose
+default_crl_days = 30
 
 # For certificate revocation listss
 
